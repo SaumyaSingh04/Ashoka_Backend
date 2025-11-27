@@ -3,21 +3,23 @@ const mongoose = require('mongoose');
 const InventorySchema = new mongoose.Schema({
   name: { 
     type: String, 
-    required: true 
+    required: true,
+    trim: true
   },
   category: { 
     type: String, 
-    enum: ['Amenity', 'Cleaning', 'Maintenance', 'Food', 'Beverage', 'Linen', 'Toiletry','Snakes','Other'],
+    enum: ['Housekeeping', 'Pantry', 'Minibar', 'Kitchen', 'Laundry', 'Maintenance'],
     required: true
+  },
+  unitType: { 
+    type: String, 
+    enum: ['pcs', 'pack', 'bottle', 'litre', 'kg', 'gram', 'meter', 'roll', 'box', 'set'],
+    required: true 
   },
   currentStock: { 
     type: Number, 
     required: true,
     min: 0
-  },
-  unit: { 
-    type: String, 
-    required: true 
   },
   minThreshold: { 
     type: Number, 
@@ -31,32 +33,31 @@ const InventorySchema = new mongoose.Schema({
   },
   costPerUnit: { 
     type: Number, 
-    required: true 
+    required: true,
+    min: 0
   },
-  supplier: { 
-    name: String,
-    contactPerson: String,
-    phone: String,
-    email: String,
-    address: String
+  supplier: {
+    name: { type: String, required: true },
+    contactPerson: { type: String },
+    phone: { type: String },
+    email: { type: String },
+    address: { type: String },
+    gstNumber: { type: String }
   },
-  location: { 
+  storageLocation: { 
     type: String,
+    required: true,
     default: 'Main Storage'
   },
-  lastReorderDate: { 
-    type: Date 
+  notes: { 
+    type: String 
   },
   isLowStock: { 
     type: Boolean, 
     default: false 
   },
-  autoReorder: { 
-    type: Boolean, 
-    default: false 
-  },
-  notes: { 
-    type: String 
+  lastRestockDate: { 
+    type: Date 
   }
 }, { timestamps: true });
 

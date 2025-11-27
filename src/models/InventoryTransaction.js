@@ -8,7 +8,7 @@ const InventoryTransactionSchema = new mongoose.Schema({
   },
   transactionType: {
     type: String,
-    enum: ['restock', 'use', 'adjustment', 'transfer', 'return','used', 'added', 'consumed','damaged','missing'],
+    enum: ['add', 'reduce', 'room_allocation', 'room_refill', 'adjustment'],
     required: true
   },
   quantity: {
@@ -33,8 +33,10 @@ const InventoryTransactionSchema = new mongoose.Schema({
     required: true
   },
   notes: String,
-  purchaseOrderId: String,
-  cost: Number
+  isAutomatic: {
+    type: Boolean,
+    default: false
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.models.InventoryTransaction || mongoose.model('InventoryTransaction', InventoryTransactionSchema);

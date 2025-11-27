@@ -29,6 +29,21 @@ router.get('/room/:roomId/checklist', authMiddleware(['admin', 'staff']), invent
 router.post('/room/:roomId/checklist', authMiddleware(['admin', 'staff']), inventoryController.createRoomChecklist);
 router.put('/checklist/:checklistId', authMiddleware(['admin', 'staff']), inventoryController.updateChecklist);
 
+// Get low stock alerts
+router.get('/alerts/low-stock', authMiddleware(['admin', 'staff']), inventoryController.getLowStockAlerts);
+
+// Get inventory summary
+router.get('/summary', authMiddleware(['admin', 'staff']), inventoryController.getInventorySummary);
+
+// Get items by category
+router.get('/category/:category', authMiddleware(['admin', 'staff']), inventoryController.getItemsByCategory);
+
+// Bulk stock update (Admin only)
+router.post('/bulk-update', authMiddleware(['admin']), inventoryController.bulkStockUpdate);
+
+// Generate reorder report
+router.get('/reports/reorder', authMiddleware(['admin', 'staff']), inventoryController.getReorderReport);
+
 // Debug route to check inventory
 router.get('/debug/count', authMiddleware(['admin', 'staff']), async (req, res) => {
   try {
